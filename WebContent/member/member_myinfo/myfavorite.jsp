@@ -62,10 +62,27 @@
 		</div>
 	</div>
 </div>
-
+<input type="text" id='bms' value="${bomMemberSeiral }">
 <script>
+var serial = $(bms).val();
+console.log(serial);
+
 $('.favorite-page-btn').click(function(){
 	  $(this).parent().children('.favorite-page-btn').removeClass('favorite-page-btn-activity');
 	  $(this).addClass('favorite-page-btn-activity');
 });
+
+$.ajax({
+	url : 'FavoriteList.mem',
+	type : 'POST',
+	data : { 'serial' : serial},
+	dataType : 'json',
+	success : function(json){
+		console.log(json);
+	},error : function(error) {
+		alert(error);
+	}
+});
+
+
 </script>

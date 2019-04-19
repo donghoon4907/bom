@@ -40,7 +40,6 @@ $(".member-myinfo-content-cont").load('./member/member_myinfo/viewingactivity.js
 $('.member-myinfo-tab-wrap').click(function(){
 	  $(this).parent().children('.member-myinfo-tab-wrap').removeClass('myinfo-tab-active');
 	  $(this).addClass('myinfo-tab-active');
-	  
 });
 
 

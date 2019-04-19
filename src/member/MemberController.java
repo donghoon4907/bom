@@ -2,6 +2,7 @@ package member;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -14,6 +15,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +34,18 @@ public class MemberController {
 		this.mVali = mVali;
 	}
 
+	@RequestMapping(value = "FavoriteList.mem")
+	public void favoriteList(HttpServletRequest req, HttpServletResponse resp) throws Exception{
+		String serial = req.getParameter("serial");
+		
+		PrintWriter out = resp.getWriter();
+	
+		String json = mDao.favorList(serial);
+		
+		out.print(json);
+	}
+	
+	
 	@RequestMapping(value = "FavoriteCheck.mem")
 	public void favoriteCheck(HttpServletRequest req, HttpServletResponse resp) throws Exception {
 		PrintWriter out = resp.getWriter();
@@ -137,7 +151,7 @@ public class MemberController {
 
 				int serial = mDao.getKakaoMemberSerial(kakaoId);
 				mDao.createTable(serial);
-
+				
 				req.getSession().setAttribute("bomMemberSeiral", serial);
 				req.getSession().setAttribute("bomLoginId", kakaoId);
 				req.getSession().setAttribute("bomNickName", kakaoNickName);
@@ -196,6 +210,7 @@ public class MemberController {
 
 		MemberVo vo = new MemberVo();
 		PrintWriter out = resp.getWriter();
+
 		vo.setM_name(req.getParameter("name"));
 		vo.setM_nickName(req.getParameter("nickName"));
 		vo.setM_birth(req.getParameter("date"));
@@ -267,14 +282,14 @@ public class MemberController {
 		}
 
 	}
-	
+
 	@RequestMapping(value = "/loginHelp.mem")
 	public ModelAndView loginHelp(HttpServletRequest req) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("member/login_help.jsp");
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/pwdMailSending.mem")
 	public void pwdMailSending(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/html; charset=UTF-8");
@@ -348,14 +363,85 @@ public class MemberController {
 		PrintWriter out = resp.getWriter();
 
 		String phone = req.getParameter("idSearch");
-		System.out.println(phone);
 		String resultPhone = mDao.phoneSearch(phone);
-		System.out.println(resultPhone);
 
 		if (resultPhone != null) {
 			out.println("<script>alert('이메일은 " + resultPhone + " 입니다.'); location.href='/final/login.mem';</script>");
-		}else {
+		} else {
 			out.println("<script>alert('등록되지 않은 번호입니다.');location.href='/final/loginHelp.mem';</script>");
 		}
 	}
+
+	@RequestMapping(value = "member_myinfo_view.mem")
+	public void member_myinfo_view(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		PrintWriter out = resp.getWriter();
+		boolean b = false;
+
+		String pwd = req.getParameter("pwd");
+		String chgPwd = req.getParameter("chgPwd");
+		String email = req.getParameter("email");
+
+		b = mDao.pwdchg(pwd, chgPwd, email);
+
+		if (b) {
+			out.print("true");
+		} else {
+			out.print("false");
+		}
+	}
+
+	@RequestMapping(value = "myinfo_view_nickName.mem")
+	public void myinfo_view_nickName(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/html; charset=UTF-8");
+
+		PrintWriter out = resp.getWriter();
+		String nickName = req.getParameter("nickName");
+
+		MemberVo vo = mDao.nickNameSearch(nickName);
+
+		String json = String.format("[{'birth':'%s'},{'namei':'%s'},{'phone':'%s'}]", vo.getM_birth(), vo.getM_name(),
+				vo.getM_phone());
+
+		json = json.replace("\'", "\"");
+		out.print(json);
+	}
+
+	@RequestMapping(value = "member_myinfo_personal.mem")
+	public void member_myinfo_personal(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		PrintWriter out = resp.getWriter();
+		boolean b = false;
+
+		String phone = req.getParameter("phone");
+
+		b = mDao.phoneChg(phone);
+
+		if (b) {
+			out.print("true");
+		} else {
+			out.print("false");
+		}
+
+	}
+
+	@RequestMapping(value = "member_myinfo_delete.mem")
+	public void member_myinfo_delete(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		PrintWriter out = resp.getWriter();
+		String email = req.getParameter("email");
+		String pwd = req.getParameter("pwd");
+		HttpSession session = req.getSession();
+		
+		boolean emailPwd = mDao.emailDelete(email,pwd);
+		
+		
+		  if (emailPwd){ 
+			  session.invalidate();
+			  out.print("true");
+		  }else{
+			  out.print("false"); 
+		  }
+		 
+		
+	}
+
 }
