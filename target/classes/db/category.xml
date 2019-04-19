@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="category">
+	<select id="view" parameterType="int" resultType="category.CategoryVo">
+		select * from bom_movie where c_serial = #{_parameter}
+	</select>
+	<select id="list" parameterType="String" resultType="category.CategoryVo">
+		select * from bom_movie where c_movie_subject like '%${_parameter}%'
+	</select>
+	<select id="getActor" parameterType="int" resultType="category.ActorVo">
+		select * from bom_actor where c_pserial = #{_parameter}
+	</select>
+	<select id="getRecommend" parameterType="int" resultType="category.RecommendVo">
+		select * from bom_recommend_video where c_pserial = #{_parameter}
+	</select>
+	<select id="getSerial" parameterType="String" resultType="category.CategoryVo">
+		select * from bom_movie where c_movie_subject = #{_parameter}
+	</select>
+	<select id="genre" parameterType="String" resultType="category.CategoryVo">
+		select bom_movie.c_serial, 
+		bom_movie.c_movie_subject, 
+		bom_movie.c_movie_subject_eng
+		from bom_movie inner join bom_genre
+		on bom_movie.c_serial = bom_genre.c_pserial
+		where bom_genre.c_genre_name = #{_parameter}
+	</select>
+</mapper>

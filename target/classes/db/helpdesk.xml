@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="helpdesk">
+
+	<insert id = "helpdeskInsert" parameterType="helpdesk.HelpDeskVo">
+		insert into bom_question(q_serial, q_subject, q_content, q_mdate, m_writer, m_serial, q_photo, q_reply)
+		values(seq_bom_question.nextval, #{q_subject}, #{q_content}, sysdate, #{m_writer}, #{m_serial}, #{q_photo}, null)
+	</insert>
+
+	<select id = "helpdeskList" parameterType="Integer" resultType="helpdesk.HelpDeskVo">
+		select * from bom_question where m_serial = ${_parameter} order by q_mdate DESC
+	</select>
+
+	<update id="helpdeskModify" parameterType="helpdesk.HelpDeskVo">
+		update bom_question set
+			q_subject = #{q_subject}, q_content = #{q_content}, q_mdate = sysdate, q_photo = #{q_photo} 
+			where q_serial = #{q_serial} and m_serial = #{m_serial}
+	</update>
+	<delete id="helpdeskDelete" parameterType="Integer">
+		delete from bom_question where q_serial = ${_parameter}
+	</delete>
+
+</mapper>

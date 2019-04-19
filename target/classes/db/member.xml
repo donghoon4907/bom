@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	<select id="favorList" parameterType="member.Page" resultType="member.FavoriteVo">
+		select  f.c_serial c_serial, m.c_movie_subject c_movie_subject, m.c_movie_subject_eng c_movie_subject_eng, m.c_playtime c_playtime, v.v_playtime v_playtime
+		from ${c_tableName} f inner join bom_movie m
+		on f.c_serial = m.c_serial 
+		inner join ${c_tableName1} v
+		on  f.c_serial = v.c_serial
+	
+	</select>
+
+	<select id="favorPage" parameterType="String" resultType="int">
+	
+		select count(*) from ${_parameter}
+	
+	</select>
+	<select id="favorCheck" parameterType="member.FavoriteVo"
+		resultType="boolean">
+		select
+		case when count(*) > 0
+		then 1
+		else 0
+		end result
+		from
+		${c_tableName} where c_serial=${c_serial}
+	</select>
+	<insert id="addFavorite" parameterType="member.FavoriteVo">
+		insert into
+		${c_tableName} values(${c_serial})
+	</insert>
+	<delete id="deleteFavorite" parameterType="member.FavoriteVo">
+		delete from
+		${c_tableName} where c_serial = ${c_serial}
+	</delete>
+	<update id="updateView" parameterType="member.ViewingActivityVo">
+		update ${c_tableName} set
+		c_playtime = ${c_playtime} where c_serial = ${c_serial}
+	</update>
+	<select id="getPlaytime"
+		parameterType="member.ViewingActivityVo" resultType="Integer">
+		select c_playtime
+		from ${c_tableName} where c_serial = ${c_serial}
+	</select>
+	<select id="checkView" parameterType="member.ViewingActivityVo"
+		resultType="Integer">
+		select count(*) from ${c_tableName} where c_serial =
+		${c_serial}
+	</select>
+	<insert id="addViewingActivity"
+		parameterType="member.ViewingActivityVo">
+		insert into ${c_tableName}
+		(c_serial, c_date, v_playtime)
+		values (${c_serial}, sysdate, ${v_playtime})
+
+
+	</insert>
+	<select id="kakaoMemberCheck" parameterType="int"
+		resultType="boolean">
+		select
+		case when count(*) > 0
+		then 1
+		else 0
+		end result
+		from
+		bom_kakao_member where k_id=#{_parameter}
+	</select>
+
+	<select id="getKakaoMemberSerial" parameterType="int"
+		resultType="int">
+		select m_serial from bom_kakao_member where k_id =
+		#{_parameter}
+	</select>
+
+	<insert id="kakaoMemberInsert"
+		parameterType="member.KakaoMemberVo">
+
+		insert into bom_kakao_member(m_serial, k_id, k_nickname,
+		k_signdate)
+		values(seq_bom_member.nextval, #{k_id}, #{k_nickname},
+		sysdate)
+	</insert>
+
+	<update id="createTablePurchase" parameterType="HashMap">
+		create table
+		${pn}
+		(
+		p_cost number(38),
+		p_date date
+		)
+	</update>
+
+	<update id="createTableViewingActivite" parameterType="HashMap">
+		create
+		table ${vn}
+		(
+		c_serial number(10),
+		c_date date,
+		v_playtime number(10)
+		)
+	</update>
+
+	<update id="createTableFavorite" parameterType="HashMap">
+		create table
+		${fn}
+		(
+		c_serial number(10)
+		)
+	</update>
+
+	<insert parameterType="member.MemberVo" id="memberInsert"> insert into
+		bom_member values (seq_bom_member.NEXTVAL , '${m_name}' ,
+		'${m_nickName}', '${m_birth}', '${m_phone}' , ${m_gender},
+		'${m_email}','${m_password}', 1, sysdate)
+	</insert>
+
+	<select resultType="member.MemberVo" parameterType="String"
+		id="getMemberSerial">
+		select * from bom_member where m_email= #{_parameter}
+	</select>
+
+	<select resultType="boolean" parameterType="member.MemberVo"
+		id="memberLogin">
+		select case when count(*) > 0 then 1 else 0 end result from
+		bom_member where
+		m_email = #{m_email} and m_password = #{m_password}
+	</select>
+
+	<select resultType="Integer" parameterType="String" id="idchk">
+		SELECT COUNT(*)
+		FROM bom_member
+		WHERE m_email = #{m_email}
+	</select>
+
+	<select resultType="Integer" parameterType="String"
+		id="idnickName">
+		SELECT COUNT(*) FROM bom_member WHERE m_nickName = #{m_nickName}
+	</select>
+
+	<select resultType="String" parameterType="String" id="idSearck">
+		SELECT m_password
+		FROM bom_member
+		WHERE m_email = #{m_email}
+	</select>
+
+	<select resultType="String" parameterType="String"
+		id="phoneSearch">
+		select m_email
+		from bom_member
+		where m_phone= #{m_phone}
+	</select>
+
+	<select id="pwdSearch" parameterType="member.MemberVo"
+		resultType="boolean">
+		select
+		case when count(*) > 0
+		then 1
+		else 0
+		end result
+		from bom_member
+		where m_email = #{m_email} and m_password = #{m_password}
+	</select>
+
+	<update id="chgSearch" parameterType="String">
+		update bom_member set
+		m_password = #{m_password}
+	</update>
+	
+	<select resultType="member.MemberVo" parameterType="String" id="nickNameSearch">
+		SELECT m_name, m_birth, m_phone 
+		FROM bom_member 
+		WHERE m_nickname = #{m_nickname}
+	</select>
+	
+	<update id="phoneChg" parameterType="String">
+		update bom_member set m_phone = #{m_phone}
+	</update>
+	
+	<delete id="emailDelete" parameterType="member.MemberVo">
+		delete from bom_member where m_email = #{m_email} and m_password = #{m_password}
+	</delete>
+
+</mapper>
