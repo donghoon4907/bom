@@ -31,7 +31,21 @@ public class MemberDao implements Member {
 	public MemberDao() {
 		sqlSession = MybatisFactory.getFactory().openSession();
 	}
-
+	
+	public List<ViewingActivityVo> viewingActivityList(String serial){
+		String viewingTable = "viewingactivity_"+serial;
+		int cnt = sqlSession.selectOne("member.viweingPage", viewingTable);	
+		pageCompute(cnt);
+		Page p = new Page();
+		p.setStartNo(this.startNo);
+		p.setEndNo(this.endNo);
+		p.setC_tableName(serial);
+		p.setC_tableName1(serial);
+		p.setC_tableName2(serial);
+		List<ViewingActivityVo> data = sqlSession.selectList("member.viewingActivityList", p);
+		
+		return data;
+	}
 	
 	public List<FavoriteVo> favorList(String serial){
 		System.out.println(serial);

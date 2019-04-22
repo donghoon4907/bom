@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <link rel="stylesheet" type="text/css" href="/final/css/member/member_myinfo.css">
@@ -24,92 +25,25 @@
 					
 					<div class="member-myinfo-viewingactivity">
 						<div class="member-myinfo-viewingactivity-imgs">
+							<c:forEach var="v" items="${viewingFirstData }" varStatus="i">
+							<div class="viewingactivity-imgs" onclick="goPlayer(${v.c_serial}, '${v.c_movie_subject}', ${bomMemberSeiral })">
+								<img src="/final/img/intro/${v.c_movie_subject_eng}.jpg" width="180px" height="260px">
+								
+								<div >
+									<div>
+										<span class="viewingactivity-movie-title">${v.c_movie_subject }</span>
+									</div>
+									<div>
+										<span class="viewingactivity-movie-play-day">시청일 :${v.c_date }</span>
+									</div>
+									<div>
+										<span class="viewingactivity-movie-play-time">시간 :${v.v_playtime} / ${v.c_playtime}</span>
+									</div>
+								</div>
+							</div>
+							</c:forEach>
 					
-							<div class="viewingactivity-imgs">
-								<img src="http://placehold.it/180x260">
-								<div>
-									<div>
-										<span class="viewingactivity-movie-title">하와 수</span>
-									</div>
-									<div>
-										<span class="viewingactivity-movie-play-day">시청일 :2019.04.02</span>
-									</div>
-									<div>
-										<span class="viewingactivity-movie-play-time">시간 :00:00:00 / 01:16:00</span>
-									</div>
-								</div>
-							</div>
-					
-							<div class="viewingactivity-imgs">
-								<img src="http://placehold.it/180x260">
-								<div>
-									<div>
-										<span class="viewingactivity-movie-title">하와 수</span>
-									</div>
-									<div>
-										<span class="viewingactivity-movie-play-day">시청일 :2019.04.02</span>
-									</div>
-									<div>
-										<span class="viewingactivity-movie-play-time">시간 :00:00:00 / 01:16:00</span>
-									</div>
-								</div>
-							</div>
-							<div class="viewingactivity-imgs">
-								<img src="http://placehold.it/180x260">
-								<div>
-									<div>
-										<span class="viewingactivity-movie-title">하와 수</span>
-									</div>
-									<div>
-										<span class="viewingactivity-movie-play-day">시청일 :2019.04.02</span>
-									</div>
-									<div>
-										<span class="viewingactivity-movie-play-time">시간 :00:00:00 / 01:16:00</span>
-									</div>
-								</div>
-							</div>
-							<div class="viewingactivity-imgs">
-								<img src="http://placehold.it/180x260">
-								<div>
-									<div>
-										<span class="viewingactivity-movie-title">하와 수</span>
-									</div>
-									<div>
-										<span class="viewingactivity-movie-play-day">시청일 :2019.04.02</span>
-									</div>
-									<div>
-										<span class="viewingactivity-movie-play-time">시간 :00:00:00 / 01:16:00</span>
-									</div>
-								</div>
-							</div>
-							<div class="viewingactivity-imgs">
-								<img src="http://placehold.it/180x260">
-								<div>
-									<div>
-										<span class="viewingactivity-movie-title">하와 수</span>
-									</div>
-									<div>
-										<span class="viewingactivity-movie-play-day">시청일 :2019.04.02</span>
-									</div>
-									<div>
-										<span class="viewingactivity-movie-play-time">시간 :00:00:00 / 01:16:00</span>
-									</div>
-								</div>
-							</div>
-							<div class="viewingactivity-imgs">
-								<img src="http://placehold.it/180x260">
-								<div>
-									<div>
-										<span class="viewingactivity-movie-title">하와 수</span>
-									</div>
-									<div>
-										<span class="viewingactivity-movie-play-day">시청일 :2019.04.02</span>
-									</div>
-									<div>
-										<span class="viewingactivity-movie-play-time">시간 :00:00:00 / 01:16:00</span>
-									</div>
-								</div>
-							</div>
+							
 					
 						</div>
 						<div class="member-myinfo-viewingactivity-list-wrap">	
@@ -118,60 +52,38 @@
 									<span class="viewingactivity-text-sub">번호</span>
 									<span class="viewingactivity-text-sub">영화명</span>
 									<span class="viewingactivity-text-sub">시청일</span>
-									<span class="viewingactivity-text-sub">상영시간</span>
-									<span class="viewingactivity-text-sub">시청시간</span>
+									<span class="viewingactivity-text-sub">상영시간(분)</span>
+									<span class="viewingactivity-text-sub">시청시간(분)</span>
 								</div>
 								<div class="member-myinfo-viewingactivity-items">
-									<div class="member-myinfo-viewingactivity-item">
-										<span class="viewingactivity-text-item">1</span>
-										<span class="viewingactivity-text-item">하와 수</span>
-										<span class="viewingactivity-text-item">2019.04.03</span>
-										<span class="viewingactivity-text-item">01:16:00</span>
-										<span class="viewingactivity-text-item">00:00:00</span>
-									</div>
-									<div class="member-myinfo-viewingactivity-item">
-										<span class="viewingactivity-text-item">1</span>
-										<span class="viewingactivity-text-item">하와 수</span>
-										<span class="viewingactivity-text-item">2019.04.03</span>
-										<span class="viewingactivity-text-item">01:16:00</span>
-										<span class="viewingactivity-text-item">00:00:00</span>
-									</div>
-									<div class="member-myinfo-viewingactivity-item">
-										<span class="viewingactivity-text-item">1</span>
-										<span class="viewingactivity-text-item">하와 수</span>
-										<span class="viewingactivity-text-item">2019.04.03</span>
-										<span class="viewingactivity-text-item">01:16:00</span>
-										<span class="viewingactivity-text-item">00:00:00</span>
-									</div>
-									<div class="member-myinfo-viewingactivity-item">
-										<span class="viewingactivity-text-item">1</span>
-										<span class="viewingactivity-text-item">하와 수</span>
-										<span class="viewingactivity-text-item">2019.04.03</span>
-										<span class="viewingactivity-text-item">01:16:00</span>
-										<span class="viewingactivity-text-item">00:00:00</span>
-									</div>
-									<div class="member-myinfo-viewingactivity-item">
-										<span class="viewingactivity-text-item">1</span>
-										<span class="viewingactivity-text-item">하와 수</span>
-										<span class="viewingactivity-text-item">2019.04.03</span>
-										<span class="viewingactivity-text-item">01:16:00</span>
-										<span class="viewingactivity-text-item">00:00:00</span>
-									</div>			
+								<c:forEach var="v" items="${viewingListtData }" varStatus="i">
+									<div class="member-myinfo-viewingactivity-item" onclick="goPlayer(${v.c_serial}, '${v.c_movie_subject}', ${bomMemberSeiral })">
+										<span class="viewingactivity-text-item">${v.rn }</span>
+										<span class="viewingactivity-text-item">${v.c_movie_subject }</span>
+										<span class="viewingactivity-text-item">${v.c_date }</span>
+										<span class="viewingactivity-text-item">${v.c_playtime}</span>
+										<span class="viewingactivity-text-item">${v.v_playtime}</span>
+									</div>		
+								</c:forEach>
 								</div>
 								<div class="member-myinfo-viewingactivity-pagination-box">
 									<div class="viewingactivity-page-buttons">
-										<a href="#" class="viewingactivity-page-btn-dpre">&lt;&lt;</a>
-										<a href="#" class="viewingactivity-page-btn-pre">&lt;</a>
-										<a href="#" class="viewingactivity-page-btn viewingactivity-page-btn-activity">1</a>
-										<a href="#" class="viewingactivity-page-btn">2</a>
-										<a href="#" class="viewingactivity-page-btn">3</a>
-										<a href="#" class="viewingactivity-page-btn">4</a>
-										<a href="#" class="viewingactivity-page-btn">5</a>
-										<a href="#" class="viewingactivity-page-btn-ne">&gt;</a>
-										<a href="#" class="viewingactivity-page-btn-dne">&gt;&gt;</a>
+										<c:if test="${viewingPage.nowBlock gt 1 }">
+										<a href="#" class="viewingactivity-page-btn-dpre" onclick="goViewingactivity(1)">&lt;&lt;</a>
+										<a href="#" class="viewingactivity-page-btn-pre" onclick="goViewingactivity(${viewingPage.startPage-1})">&lt;</a>
+										</c:if>
+										<c:if test="${viewingPage.endPage != 1}">
+											<c:forEach var="i" begin="${viewingPage.startPage }" end="${viewingPage.endPage }">
+												<a href="#" class="viewingactivity-page-btn" onclick="goViewingactivity(${i })"  ${viewingPage.nowPage == i  ? "disabled" : ""}>${i}</a>
+											</c:forEach>
+										</c:if>
+										<c:if test="${viewingPage.nowBlock lt viewingPage.totBlock}">
+										<a href="#" class="viewingactivity-page-btn-ne" onclick="goViewingactivity(${viewingPage.endPage+1})" >&gt;</a>
+										<a href="#" class="viewingactivity-page-btn-dne" onclick="goViewingactivity(${viewingPage.totPage})" >&gt;&gt;</a>
+										</c:if>
 									</div>
 									<div class="viewingactivity-page-number">
-										 0 / 0 페이지
+										 ${viewingPage.nowPage} / ${viewingPage.totPage} 페이지
 									</div>
 								</div>
 							</div>

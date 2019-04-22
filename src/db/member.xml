@@ -3,6 +3,20 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
+	<select id="viewingActivityList" parameterType="member.Page" resultType="member.ViewingActivityVo">
+		select * from(
+			select rownum rn, s.* 
+				from (select v.c_serial c_serial, v.c_date c_date, v.v_playtime v_playtime, b.c_movie_subject c_movie_subject , b.c_movie_subject_eng c_movie_subject_eng,  b.c_playtime c_playtime
+						from ${c_tableName1} v inner join bom_movie b
+						on v.c_serial = b.c_serial) s)
+		where rn between ${startNo} and ${endNo}
+	
+	</select>
+	<select id="viweingPage" parameterType="String" resultType="int">
+	
+		select count(*) from ${_parameter}
+	
+	</select>	
 	<select id="favorList" parameterType="member.Page" resultType="member.FavoriteVo">
 		select * from(
 			select rownum rn, s.* 
