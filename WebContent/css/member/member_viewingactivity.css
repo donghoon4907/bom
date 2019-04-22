@@ -6,7 +6,7 @@
 
 .viewingactivity-imgs{
 	float:left;
-	margin : 0 30px 0 30px;
+	margin : 0 60px 0 60px;
 	display: inline-block;
 }
 .viewingactivity-imgs:hover{
@@ -15,7 +15,7 @@
 .viewingactivity-imgs:nth-child(1){
 	margin-left: 10px;
 }
-.viewingactivity-imgs:nth-child(6){
+.viewingactivity-imgs:nth-child(5){
 	margin-right: 0px;
 }
 .member-myinfo-viewingactivity-list-wrap{

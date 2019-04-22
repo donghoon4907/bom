@@ -4,8 +4,13 @@
 
 var serial = $(bomMemberSerial).val();
 
-function goViewingactivity(){
-	location.href = 'goViewingActivity.mem';
+function goViewingactivity(nowPage){
+	if(nowPage == null){
+		location.href = 'ViewingActivityList.mem?serial='+serial+'&nowPage=1';
+	}else{
+		location.href = 'ViewingActivityList.mem?serial='+serial+'&nowPage='+nowPage;
+	}
+	
 }
 
 

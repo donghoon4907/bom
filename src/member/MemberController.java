@@ -34,16 +34,42 @@ public class MemberController {
 		this.mVali = mVali;
 	}
 
+	@RequestMapping(value = "ViewingActivityList.mem")
+	public ModelAndView ViewingActivityList(HttpServletRequest req){
+		ModelAndView mv = new ModelAndView();
+		String serial = req.getParameter("serial");
+		System.out.println("serial");
+		mDao.setListSize(5);
+		mDao.setNowPage(1);
+		List<ViewingActivityVo> firstData = mDao.viewingActivityList(serial);
+		if(req.getParameter("nowPage") != null) {
+			int nowPage = Integer.parseInt(req.getParameter("nowPage"));
+			mDao.setNowPage(nowPage);
+		}else {
+			mDao.setNowPage(2);	
+		}
+		
+		List<ViewingActivityVo> listData = mDao.viewingActivityList(serial);
+		
+		mv.addObject("viewingFirstData", firstData);
+		mv.addObject("viewingListtData", listData);
+		mv.addObject("viewingPage",mDao);
+		
+		
+		mv.setViewName("index.jsp?content=./member/member_myinfo/myinfo.jsp");
+		return mv;
+	}
+	
 	@RequestMapping(value = "FavoriteList.mem")
 	public ModelAndView favoriteList(HttpServletRequest req){
 		ModelAndView mv = new ModelAndView();
 		String serial = req.getParameter("serial");
-		System.out.println("serial");
 		int nowPage = Integer.parseInt(req.getParameter("nowPage"));
+		mDao.setListSize(4);
 		mDao.setNowPage(nowPage);
 		List<FavoriteVo> data = mDao.favorList(serial);
 		
-		System.out.println(data.get(0).v_playtime);
+		
 		mv.addObject("favoriteList",data);
 		mv.addObject("favoritPage",mDao);
 		mv.setViewName("index.jsp?content=./member/member_myinfo/myfavorite.jsp");
@@ -195,14 +221,6 @@ public class MemberController {
 		mv.setViewName("member/login.jsp");
 		return mv;
 	}
-
-	@RequestMapping(value = "myinfo.mem")
-	public ModelAndView myinfo(HttpServletRequest req) {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("index.jsp?content=./member/member_myinfo/myinfo.jsp");
-		return mv;
-	}
-
 	@RequestMapping(value = "payinfo.mem")
 	public ModelAndView payinfo(HttpServletRequest req) {
 		ModelAndView mv = new ModelAndView();

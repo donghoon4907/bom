@@ -46,7 +46,7 @@
 	
 	<c:if test='${bomLoginId != null || kakaoLogin != null}'>
 		<li>
-			<a href="myinfo.mem">마이페이지</a>
+			<a href="ViewingActivityList.mem?serial=${bomMemberSeiral }">마이페이지</a>
 			<div>
 				<div class="nav-column"></div>
 				<div class="nav-column">
