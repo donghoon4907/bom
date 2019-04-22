@@ -152,8 +152,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
 		where m_phone= #{m_phone}
 	</select>
 
-	<select id="pwdSearch" parameterType="member.MemberVo"
-		resultType="boolean">
+	<select id="pwdSearch" parameterType="member.MemberVo" resultType="boolean">
 		select
 		case when count(*) > 0
 		then 1
@@ -163,9 +162,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
 		where m_email = #{m_email} and m_password = #{m_password}
 	</select>
 
-	<update id="chgSearch" parameterType="String">
-		update bom_member set
+	<update id="chgSearch" parameterType="member.MemberVo">
+		update bom_member set 
 		m_password = #{m_password}
+		where m_email = #{m_email}
 	</update>
 	
 	<select resultType="member.MemberVo" parameterType="String" id="nickNameSearch">
@@ -174,8 +174,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
 		WHERE m_nickname = #{m_nickname}
 	</select>
 	
-	<update id="phoneChg" parameterType="String">
-		update bom_member set m_phone = #{m_phone}
+	<update id="phoneChg" parameterType="member.MemberVo">
+		update bom_member set m_phone = #{m_phone} 
+		where m_nickName = #{m_nickName}
 	</update>
 	
 	<delete id="emailDelete" parameterType="member.MemberVo">

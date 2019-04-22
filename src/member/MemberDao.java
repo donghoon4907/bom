@@ -239,20 +239,35 @@ public class MemberDao implements Member {
 		
 		 vo.setM_email(email);
 		 vo.setM_password(pwd);
-		 
 			b = sqlSession.selectOne("member.pwdSearch",vo);
+			System.out.println(b);
 			 if(b) {
-				 sqlSession.update("member.chgSearch",chgPwd);
-				 sqlSession.commit();
-				 b=true;
+				 vo.setM_password(chgPwd);
+				 System.out.println(vo.getM_password());
+				 int cnt = sqlSession.update("member.chgSearch",vo);
+				 System.out.println(cnt);
+				 if(cnt >0) {
+					 b=true;
+					 sqlSession.commit();	 
+				 }
+				 
+				 
 			 }
-			 
+			 System.out.println("b는실행안했지만 여기까지왔다");
 		return b;
 	}
 	
-	public boolean phoneChg(String phone) {
+	public boolean phoneChg(String phone, String nickName) {
 		boolean b = false;
-		int a = sqlSession.update("member.phoneChg",phone);
+		MemberVo vo = new MemberVo();
+		
+		vo.setM_phone(phone);
+		vo.setM_nickName(nickName);
+		
+		int a = sqlSession.update("member.phoneChg",vo);
+		
+		System.out.println("a" + a);
+		
 			 if(a>0) {
 				 sqlSession.commit();
 				 b=true;

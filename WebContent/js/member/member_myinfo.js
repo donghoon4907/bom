@@ -72,10 +72,14 @@ function pwdChage(){
 
 function personalChage(){
 	var phone = $('#view-phone').val();
+	var nickName = $('#view-nickname').val();
+	
 		$.ajax({
 			type:'post',
 			url :'/final/member_myinfo_personal.mem',
-			data:{'phone':phone},
+			data:{'phone':phone,
+				  'nickName' : nickName
+				},
 			dataType:"html",
 			success : function(num){
 				if(num=="true"){
