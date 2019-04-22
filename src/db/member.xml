@@ -4,12 +4,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
 	<select id="favorList" parameterType="member.Page" resultType="member.FavoriteVo">
-		select  f.c_serial c_serial, m.c_movie_subject c_movie_subject, m.c_movie_subject_eng c_movie_subject_eng, m.c_playtime c_playtime, v.v_playtime v_playtime
-		from ${c_tableName} f inner join bom_movie m
-		on f.c_serial = m.c_serial 
-		inner join ${c_tableName1} v
-		on  f.c_serial = v.c_serial
-	
+		select * from(
+			select rownum rn, s.* 
+				from (select  f.c_serial c_serial, m.c_movie_subject c_movie_subject, m.c_movie_subject_eng c_movie_subject_eng, m.c_playtime c_playtime, v.v_playtime v_playtime
+					from ${c_tableName} f inner join bom_movie m
+					on f.c_serial = m.c_serial 
+					inner join ${c_tableName1} v
+					on  f.c_serial = v.c_serial) s)
+		where rn between ${startNo} and ${endNo}
 	</select>
 
 	<select id="favorPage" parameterType="String" resultType="int">
@@ -37,11 +39,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
 	</delete>
 	<update id="updateView" parameterType="member.ViewingActivityVo">
 		update ${c_tableName} set
-		c_playtime = ${c_playtime} where c_serial = ${c_serial}
+		v_playtime = ${c_playtime} where c_serial = ${c_serial}
 	</update>
 	<select id="getPlaytime"
 		parameterType="member.ViewingActivityVo" resultType="Integer">
-		select c_playtime
+		select v_playtime
 		from ${c_tableName} where c_serial = ${c_serial}
 	</select>
 	<select id="checkView" parameterType="member.ViewingActivityVo"

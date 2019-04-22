@@ -22,7 +22,7 @@ public class MemberDao implements Member {
 	public int endPage;
 	public int startPage;
 	
-	public int listSize = 10;//페이지당 리스트수
+	public int listSize = 4;//페이지당 리스트수
 	public int blockSize = 5;
 	public int nowPage =1;
 	
@@ -33,10 +33,9 @@ public class MemberDao implements Member {
 	}
 
 	
-	public String favorList(String serial){
-		
+	public List<FavoriteVo> favorList(String serial){
+		System.out.println(serial);
 		String favorTable = "favorite_"+serial;
-		StringBuilder sb = new StringBuilder();
 		int cnt = sqlSession.selectOne("member.favorPage", favorTable);
 		pageCompute(cnt);
 		Page p = new Page();
@@ -49,19 +48,8 @@ public class MemberDao implements Member {
 		
 		List<FavoriteVo> data = sqlSession.selectList("member.favorList", p);
 		
-		if(data.size() != 0 ) {
-			sb.append("[");
-			sb.append(data.get(0).toJSON());
-			for(int i = 1 ; i<data.size();i++) {
-				sb.append(",");
-				sb.append(data.get(i).toJSON());
-			}
-			sb.append("]");
-		}else {
-			sb = null;
-		}
 		
-		return sb.toString();
+		return data;
 	}
 	
 
