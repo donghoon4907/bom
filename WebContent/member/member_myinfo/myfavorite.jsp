@@ -34,13 +34,13 @@
 								</div>
 								<div class="member-myinfo-favorite-items">
 									<c:forEach var="v" items="${favoriteList }" varStatus="i">
-									<div class="member-myinfo-favorite-item">
+									<div class="member-myinfo-favorite-item" onclick="goPlayer(${v.c_serial}, '${v.c_movie_subject}', ${bomMemberSeiral })">
 										<span class="favorite-text-item">${i.count}</span>
 										<span class="favorite-text-item"><img src="/final/img/intro/${v.c_movie_subject_eng}.jpg" width="80px" height="110px"></span>
 										
 										<span class="favorite-text-item">${v.c_movie_subject }</span>
 										<span class="favorite-text-item">${v.c_playtime}</span>
-										<span class="favorite-text-item">${v.c_playtime}</span>
+										<span class="favorite-text-item">${v.v_playtime}</span>
 									</div>
 									</c:forEach>	
 								</div>

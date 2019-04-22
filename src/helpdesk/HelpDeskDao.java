@@ -106,7 +106,7 @@ public class HelpDeskDao implements HelpDesk {
 		vo.setQ_content(multi.getParameter("helpdeskContent"));
 		vo.setQ_mdate(multi.getParameter("helpdeskDate"));
 		
-		if(multi.getFilesystemName("photo" ) != null) {
+		if(multi.getFilesystemName("photo") != null) {
 			vo.setQ_photo(multi.getFilesystemName("photo"));
 			
 		}else {

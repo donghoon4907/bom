@@ -43,7 +43,7 @@ public class MemberController {
 		mDao.setNowPage(nowPage);
 		List<FavoriteVo> data = mDao.favorList(serial);
 		
-		
+		System.out.println(data.get(0).v_playtime);
 		mv.addObject("favoriteList",data);
 		mv.addObject("favoritPage",mDao);
 		mv.setViewName("index.jsp?content=./member/member_myinfo/myfavorite.jsp");
@@ -387,7 +387,7 @@ public class MemberController {
 		String pwd = req.getParameter("pwd");
 		String chgPwd = req.getParameter("chgPwd");
 		String email = req.getParameter("email");
-
+		
 		b = mDao.pwdchg(pwd, chgPwd, email);
 
 		if (b) {
@@ -420,8 +420,9 @@ public class MemberController {
 		boolean b = false;
 
 		String phone = req.getParameter("phone");
+		String nickName = req.getParameter("nickName");
 
-		b = mDao.phoneChg(phone);
+		b = mDao.phoneChg(phone,nickName);
 
 		if (b) {
 			out.print("true");

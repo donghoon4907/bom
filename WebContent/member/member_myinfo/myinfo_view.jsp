@@ -35,7 +35,7 @@
 									<div class="member-view-wrapper">
 										<div class="member-view-wrapper-item1 item-detail">
 										<label class="member-view-label label-email">Email</label>
-											<input name="view-email" class="nfTextField " id="view-email" type="email" autocomplete="off" placeholder="Email" value="${bomLoginId}" onfocus="javascript:blur();" style="cursor: default;">
+											<input name="view-email" class="nfTextField " id="view-email" type="email" autocomplete="off" placeholder="Email" value="${bomLoginId}" onfocus="javascript:blur();" style="cursor: default;" >
 										</div>
 										
 										<div class="member-view-wrapper-item2 item-detail">
@@ -45,7 +45,7 @@
 										
 										<div class="member-view-wrapper-item3 item-detail">
 											<label class="member-view-label label-email">Password</label>
-											<input autocomplete="off" type="password" id="view-password" class="nfTextField" name="view-password" placeholder="Password" value="">
+											<input autocomplete="off" type="password" id="view-password" class="nfTextField" name="view-password" placeholder="Password" value="" autocomplete="off" >
 										</div>
 										
 										<div class="member-view-wrapper-item4 item-detail">
@@ -60,7 +60,7 @@
 										
 										<div class="member-view-wrapper-item6 item-detail">
 											<label class="member-view-label label-email">Date Of Birth</label>
-											<input autocomplete="off" type="date" id="view-date" class="nfTextField" name="view-date" readonly onfocus="javascript:blur();" style="cursor: default;" value="1993-11-18">
+											<input autocomplete="off" type="date" id="view-date" class="nfTextField" name="view-date" readonly onfocus="javascript:blur();" style="cursor: default;" value="">
 										</div>
 										
 										<div class="member-view-wrapper-item7 item-detail">
@@ -69,7 +69,7 @@
 										
 										<div class="member-view-wrapper-item8 item-detail">
 											<label class="member-view-label label-email">Phone</label>
-											<input autocomplete="off" type="text" id="view-phone" class="nfTextField" name="view-phone" placeholder="NickName" value="01099997878">
+											<input autocomplete="off" type="text" id="view-phone" class="nfTextField" name="view-phone" placeholder="NickName" value="">
 										</div>
 										
 										<div class="member-view-wrapper-item9">
