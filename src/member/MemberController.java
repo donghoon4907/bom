@@ -35,14 +35,21 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "FavoriteList.mem")
-	public void favoriteList(HttpServletRequest req, HttpServletResponse resp) throws Exception{
+	public ModelAndView favoriteList(HttpServletRequest req){
+		ModelAndView mv = new ModelAndView();
 		String serial = req.getParameter("serial");
+		System.out.println("serial");
+		int nowPage = Integer.parseInt(req.getParameter("nowPage"));
+		mDao.setNowPage(nowPage);
+		List<FavoriteVo> data = mDao.favorList(serial);
 		
-		PrintWriter out = resp.getWriter();
-	
-		String json = mDao.favorList(serial);
 		
-		out.print(json);
+		mv.addObject("favoriteList",data);
+		mv.addObject("favoritPage",mDao);
+		mv.setViewName("index.jsp?content=./member/member_myinfo/myfavorite.jsp");
+		
+		return mv;
+		
 	}
 	
 	

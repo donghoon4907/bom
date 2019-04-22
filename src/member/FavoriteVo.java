@@ -1,6 +1,7 @@
 package member;
 
 public class FavoriteVo {
+	int rn;
 	String bom_movie = "bom_movie";
 	String c_tableName;
 	
