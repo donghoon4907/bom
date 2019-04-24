@@ -431,6 +431,26 @@ public class MemberController {
 		json = json.replace("\'", "\"");
 		out.print(json);
 	}
+	
+	@RequestMapping(value = "myinfo_kakao_nickName.mem")
+	public void myinfo_kakao_nickName(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/html; charset=UTF-8");
+
+		PrintWriter out = resp.getWriter();
+		String nickName = req.getParameter("nickName2");
+
+		KakaoMemberVo vo = mDao.nickNameSearch2(nickName);
+		
+		
+		String json = String.format("[{'birthi':'%s'},{'namei':'%s'},{'phonei':'%s'},{'emaili':'%s'}]", 
+				vo.getK_brith(), vo.getK_name(), vo.getK_phone(), vo.getK_email());
+
+		System.out.println("1"+vo.getK_phone());
+		
+		json = json.replace("\'", "\"");
+		out.print(json);
+	}
 
 	@RequestMapping(value = "member_myinfo_personal.mem")
 	public void member_myinfo_personal(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -447,7 +467,6 @@ public class MemberController {
 		} else {
 			out.print("false");
 		}
-
 	}
 
 	@RequestMapping(value = "member_myinfo_delete.mem")
@@ -468,6 +487,22 @@ public class MemberController {
 		  }
 		 
 		
+	}
+	@RequestMapping(value="member_myinfo_kakaoModify.mem")
+	public void member_minfo_kakaoModify(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		PrintWriter out = resp.getWriter();
+		String email = req.getParameter("email");
+		String name = req.getParameter("name");
+		String date = req.getParameter("date");
+		String phone = req.getParameter("phone");
+		String id = req.getParameter("id");
+		
+		
+		int cnt = mDao.kakaoModify(email, name, date, phone, id);
+		
+		if(cnt>0) {
+			out.print(cnt);
+		}
 	}
 
 }
