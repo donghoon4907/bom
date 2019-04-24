@@ -54,6 +54,7 @@ public class MemberDao implements Member {
 		if(msv != null) {
 			String ss = msv.getEnddate().substring(0,10);
 			ss = ss.replace("-", "");
+<<<<<<< HEAD
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); 
 			try {
 				Date date = new Date();
@@ -71,8 +72,30 @@ public class MemberDao implements Member {
 				e.printStackTrace();
 			}
 
+=======
+	
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); 
+			try {
+				Date date = new Date();
+				String sd = sdf.format(date);
+				Date nowDate = sdf.parse(sd);
+				Date endDate = sdf.parse(ss);
+				
+				long diff = endDate.getTime()- nowDate.getTime();
+				long diffDays = diff / (24*60*60*1000);
+				
+				str = diffDays+"";
+	
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+>>>>>>> branch 'master' of https://github.com/donghoon4907/bom.git
 		}
+<<<<<<< HEAD
 		
+=======
+>>>>>>> branch 'master' of https://github.com/donghoon4907/bom.git
 		return str;
 		
 	}
