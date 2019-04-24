@@ -70,9 +70,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
 		insert into ${c_tableName}
 		(c_serial, c_date, v_playtime)
 		values (${c_serial}, sysdate, ${v_playtime})
-
-
 	</insert>
+	
 	<select id="kakaoMemberCheck" parameterType="int"
 		resultType="boolean">
 		select
@@ -190,6 +189,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
 		WHERE m_nickname = #{m_nickname}
 	</select>
 	
+	<select resultType="member.KakaoMemberVo" parameterType="String" id="nickNameSearch2">
+		SELECT k_email, k_brith, k_phone, k_name
+		FROM bom_kakao_member 
+		WHERE k_nickname = #{k_nickname}
+	</select>
+	
 	<update id="phoneChg" parameterType="member.MemberVo">
 		update bom_member set m_phone = #{m_phone} 
 		where m_nickName = #{m_nickName}
@@ -198,5 +203,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
 	<delete id="emailDelete" parameterType="member.MemberVo">
 		delete from bom_member where m_email = #{m_email} and m_password = #{m_password}
 	</delete>
-
+	
+	<update id="kakaoModify" parameterType="member.KakaoMemberVo">
+		update bom_kakao_member 
+		set  k_name = #{k_name}, k_brith = #{k_brith}, k_phone = #{k_phone}, k_gender = 1, k_email = #{k_email},  k_status = 1
+		where  k_id = #{k_id}
+	</update>
 </mapper>

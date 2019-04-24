@@ -286,6 +286,11 @@ public class MemberDao implements Member {
 		return sqlSession.selectOne("member.nickNameSearch", nickName);
 	}
 	
+	public KakaoMemberVo nickNameSearch2(String nickName) {
+		return sqlSession.selectOne("member.nickNameSearch2", nickName);
+	}
+
+	
 	public boolean emailDelete(String email, String pwd) {
 		MemberVo vo = new MemberVo();
 		boolean c = false;
@@ -323,7 +328,23 @@ public class MemberDao implements Member {
 			 System.out.println(b);
 		return b;
 	}
-  
+	
+	public int kakaoModify(String email,String name, String date, String phone, String id) {
+		KakaoMemberVo vo = new KakaoMemberVo();
+		vo.setK_email(email);
+		vo.setK_name(name);
+		vo.setK_brith(date);
+		vo.setK_phone(phone);
+		vo.setK_id(Integer.parseInt(id));
+		
+		 int cnt = sqlSession.update("member.kakaoModify",vo);
+		 if(cnt>0) sqlSession.commit();
+		 else sqlSession.rollback();
+		 
+		 return cnt;
+	}
+	
+	
 		public void pageCompute(int cnt) {
 
 		try {
