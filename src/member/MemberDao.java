@@ -49,28 +49,29 @@ public class MemberDao implements Member {
 	
 	public String MemberShipEndDate(String serial) {
 		
-		String str = null;
+		String str = "0";
 		MemberShipVo msv= sqlSession.selectOne("member.getMemberShip",serial);
-		String ss = msv.getEnddate().substring(0,10);
-		ss = ss.replace("-", "");
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); 
-		try {
-			Date date = new Date();
-			String sd = sdf.format(date);
-			Date nowDate = sdf.parse(sd);
-			Date endDate = sdf.parse(ss);
-			
-			long diff = endDate.getTime()- nowDate.getTime();
-			long diffDays = diff / (24*60*60*1000);
-			
-			str = diffDays+"";
-
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(msv != null) {
+			String ss = msv.getEnddate().substring(0,10);
+			ss = ss.replace("-", "");
+	
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); 
+			try {
+				Date date = new Date();
+				String sd = sdf.format(date);
+				Date nowDate = sdf.parse(sd);
+				Date endDate = sdf.parse(ss);
+				
+				long diff = endDate.getTime()- nowDate.getTime();
+				long diffDays = diff / (24*60*60*1000);
+				
+				str = diffDays+"";
+	
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-
 		return str;
 		
 	}

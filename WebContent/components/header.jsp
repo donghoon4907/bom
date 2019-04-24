@@ -57,7 +57,7 @@
 					<br />
 					<h3 class="orange">내 정보</h3>
 					<ul>
-						<li><a href="#">내 정보</a></li>
+						<li><a href="ViewingActivityList.mem?serial=${bomMemberSeiral }">내 정보</a></li>
 					</ul>
 				</div>
 				<div class="nav-column">
@@ -65,7 +65,7 @@
 					<h3 class="orange">멤버쉽</h3>
 					<ul>
 						<li><a href="payinfo.mem">나의 멤버쉽</a></li>
-						<li><a href="#">결제 내역</a></li>
+						<li><a href="purchseList.mem?serial=${bomMemberSeiral }">결제 내역</a></li>
 					</ul>
 				</div>
 			</div>

@@ -27,7 +27,16 @@
 						<div class="member-purchase-wrapp">
 						
 							<div class="member-purchase-title">
-								<div class="member-purchase-font">이용권이 ${endDays}일 후에 만료 됩니다.</div>
+							      <c:choose>
+							         <c:when test='${endDays == 0}'>   
+							            <div class="member-purchase-font">이용권이 만료 되었습니다.</div>
+							         </c:when>
+							         <c:otherwise>
+							           <div class="member-purchase-font">이용권이 ${endDays}일 후에 만료 됩니다.</div>
+							         </c:otherwise>
+							      </c:choose>
+								
+
 							</div>
 						
 							<div class="member-purchase-bbswrap">
