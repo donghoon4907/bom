@@ -442,7 +442,6 @@ public class MemberController {
 
 		KakaoMemberVo vo = mDao.nickNameSearch2(nickName);
 		
-		System.out.println(vo.getK_phone());
 		
 		String json = String.format("[{'birthi':'%s'},{'namei':'%s'},{'phonei':'%s'},{'emaili':'%s'}]", 
 				vo.getK_brith(), vo.getK_name(), vo.getK_phone(), vo.getK_email());
