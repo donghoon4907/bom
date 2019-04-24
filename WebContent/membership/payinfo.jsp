@@ -33,10 +33,13 @@
 <script>
 	$("#main-video").html(null);
 	$("#main-video").css("background", "#1a1a1a");
-
+	
+	
 	var IMP = window.IMP; // 
 	IMP.init('imp07369909'); // "가맹점 식별코드"
 	function goKakaoPay(email, name, phone, addr, postcode) {
+			
+		
 		IMP.request_pay({
 			pg : 'kakao', // version 1.1.0부터 지원.
 			pay_method : 'card',
@@ -47,20 +50,36 @@
 			buyer_name : name,
 			buyer_tel : phone,
 			buyer_addr : addr,
-			buyer_postcode : postcode,
-			m_redirect_url : '/final/index.main'
+			buyer_postcode : postcode
 		}, function(rsp) {
 			if (rsp.success) {
-				var msg = '결제가 완료되었습니다.';
-				msg += '고유ID : ' + rsp.imp_uid;
+			
+				$.ajax({
+					url : 'addMemberShip.mem',
+					data : {'serial': $('#bomMemberSerial').val()},
+					type : 'POST',
+					success: function(result){
+						if(result ="true"){
+							alert('결제가 완료되었습니다.');
+							console.log("결완");
+							location.href = '/final/index.main';
+						}else{
+							alert('결제가 실패하였습니다.');
+						}
+					},
+					error:function(error){
+						console.log(error);	
+					}
+				});
+				
+/* 				msg += '고유ID : ' + rsp.imp_uid;
 				msg += '상점 거래ID : ' + rsp.merchant_uid;
 				msg += '결제 금액 : ' + rsp.paid_amount;
-				msg += '카드 승인번호 : ' + rsp.apply_num;
+				msg += '카드 승인번호 : ' + rsp.apply_num; */
 			} else {
-				var msg = '결제에 실패하였습니다.';
-				msg += '에러내용 : ' + rsp.error_msg;
+				alert('결제에 실패하였습니다.' +	'에러내용 : ' + rsp.error_msg);
 			}
-			alert(msg);
+			
 		});
 	}
 </script>

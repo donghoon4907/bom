@@ -2,6 +2,8 @@ package member;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -33,7 +35,49 @@ public class MemberController {
 		this.mDao = (MemberDao) mDao;
 		this.mVali = mVali;
 	}
-
+	@RequestMapping(value = "purchseList.mem")
+	public ModelAndView purchaseList(HttpServletRequest req) {
+		ModelAndView mv = new ModelAndView();
+		String serial = req.getParameter("serial");
+		String year;
+		if(req.getParameter("year")==null) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+			Date date = new Date();
+			year = sdf.format(date);
+		}else{
+			year = req.getParameter("year");
+		}
+		System.out.println(serial);
+		System.out.println(year);
+		
+		String endDays = mDao.MemberShipEndDate(serial);
+		List<PurchaseVo> data = mDao.purchaseList(serial,year);	
+		
+		
+		mv.addObject("endDays",endDays);
+		mv.addObject("purchaseList",data);
+		mv.addObject("selYear",year);
+		mv.setViewName("index.jsp?content=./member/member_myinfo/purchase.jsp");
+		
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "addMemberShip.mem")
+	public void addMemberShip(HttpServletRequest req, HttpServletResponse resp) throws Exception{
+		int serial = Integer.parseInt(req.getParameter("serial"));
+		PrintWriter out = resp.getWriter();
+		
+		boolean b = mDao.addMemberShip(serial);
+		if(b) {
+			out.print("true");
+		}else {
+			out.print("false");
+		}	
+	}
+	
+	
+	
 	@RequestMapping(value = "ViewingActivityList.mem")
 	public ModelAndView ViewingActivityList(HttpServletRequest req){
 		ModelAndView mv = new ModelAndView();

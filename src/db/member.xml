@@ -3,6 +3,35 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
+	<select id="purchaseList" parameterType="HashMap" resultType="member.PurchaseVo">
+		select * from purchase_${serial} where to_char(p_date, 'YYYY')='${year}'
+	</select>
+	<select id="getMemberShip" parameterType="String" resultType="member.MemberShipVo">
+		select * from bom_membership where m_serial=${_parameter}
+	</select>
+	<select id="MemberShipCheck" parameterType="int" resultType="boolean">
+		select
+		case when count(*) > 0
+		then 1
+		else 0
+		end result
+		from
+		bom_membership where m_serial=${_parameter}
+	</select>
+	<update id="updateMemberShip" parameterType="int">
+		update bom_membership set
+			startdate = sysdate,
+			enddate = sysdate+30
+			where m_serial = ${_parameter}
+	
+	</update>
+	<insert id="addPurchase" parameterType="String">
+		insert into ${_parameter} values(2500, sysdate) 
+	</insert>
+	<insert id="addMemberShip" parameterType="int">
+		insert into bom_membership 
+		values(seq_bom_membership.nextval, #{_parameter}, sysdate, sysdate+30)
+	</insert>
 	<select id="viewingActivityList" parameterType="member.Page" resultType="member.ViewingActivityVo">
 		select * from(
 			select rownum rn, s.* 

@@ -16,8 +16,12 @@ function goViewingactivity(nowPage){
 
 
 
-function goPurchase(){
-	location.href = 'index.jsp?content=./member/member_myinfo/purchase.jsp';
+function goPurchase(year){
+	if(year == null){
+		location.href = "purchseList.mem?serial="+$("#bomMemberSerial").val();
+	}else{
+		location.href = "purchseList.mem?serial="+$("#bomMemberSerial").val()+"&year="+year;
+	}
 }
 function goMyinfoView(){
 	location.href = 'index.jsp?content=./member/member_myinfo/myinfo_view.jsp';
