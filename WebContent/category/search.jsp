@@ -17,7 +17,7 @@
 		<div class="search-result-movie">
 			<div class="search-result-movie-wrapper">
 				<c:forEach var='m' items="${searchResult }">
-					<div class="search-result-movie-item" onclick="goPlayer(${m.c_serial},'${m.c_movie_subject}')">
+					<div class="search-result-movie-item" onclick="goPlayer(${m.c_serial},'${m.c_movie_subject}, ${bomMemberSeiral }')">
 						<img class="search-result-movie-img" src="/final/img/intro/${m.c_movie_subject_eng }.jpg"/>
 					</div>
 				</c:forEach>

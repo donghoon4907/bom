@@ -85,7 +85,7 @@
 					</div>
 
 
-					<div class="saveTime" style="color: color"></div>
+					<div class="saveTime" style="color: black">${playtiem }</div>
 
 					<div class="playedTime"></div>
 
@@ -178,7 +178,7 @@
          
        var saveTime      = $('.saveTime'); //새로 저장 될 시간
        var playedTime      = $('#playedTime').val();        //기존 저장된 시간 입력
-
+	   var fullTime = ${movie.c_playtime};
        var viewAd = $(".view-ad");
        var ad = $("#view-ad-close");
        
@@ -194,14 +194,11 @@
           viewAd.hide();
           
        });
-
-       
        
        var text = $('#images');
       var i = 0;
       var movieSerial = ${movie.c_serial};
-      var mSerial = $('#user').val();       
-       
+      var mSerial = $('#user').val();
        $.post("FavoriteCheck.mem",{
     		serial : movieSerial,
            	mSerial : mSerial
@@ -217,20 +214,14 @@
    		});
 
       
-       var totalSeconeds = Math.round(playedTime);
-         var totalMinutes  = Math.floor(totalSeconeds/60);
-         if (totalMinutes > 0) {
-            totalSeconeds -= totalMinutes * 60;
-         }
-         if (totalSeconeds.toString().length === 1) {
-             totalSeconeds = "0" + totalSeconeds;
-          }
-          if (totalMinutes.toString().length === 1) {
-              totalMinutes = "0" + totalMinutes;
-          }   
-        
+       var totalSeconeds = Math.round(parseInt(fullTime));
+       var totalMinutes  = Math.floor(totalSeconeds/60);
+       computeTime(totalSeconeds,totalMinutes);
+      
       if(playedTime > 0){
-         
+    	  var totalSeconeds = Math.round(${playtime});
+          var totalMinutes  = Math.floor(totalSeconeds/60);
+         computeTime(totalSeconeds, totalMinutes);
          swal({
                   
          title : "이어보기 하시겠습니까?",
@@ -245,7 +236,6 @@
                icon:"success",      
                });
                if(playedTime != null){
-                  
                   var percentage = ( playedTime / video[0].duration) * 100;
                     // 현재시간/전체시간을 100분율 값으로 나타냄
                     progressSave.css({'width': percentage + '%'});                  
@@ -415,11 +405,14 @@
                
                overlayScreen.show();
                clearInterval(update);
+               
                //다시 재생시킬 경우 update에 입력되어 있는 값을 clearInterval 시킴
                $.post('updateView.mem',{
             	   serial : movieSerial,
             	   mSerial : mSerial,
             	   playtime : playtime
+               }, function(data){
+            	   console.log(data);
                });
            }
        }
@@ -515,9 +508,10 @@
 
        //재생되는 영상의 풀타임 함수 (총 재생시간 나타내는 구간 -->> 분 : 초)
        function getFormatedFullTime() {
-
-            var totalSeconeds = Math.round(video[0].duration);
+            var totalSeconeds = Math.round(fullTime);
             var totalMinutes  = Math.floor(totalSeconeds/60);
+            
+            
             if (totalMinutes > 0) {
                totalSeconeds -= totalMinutes * 60;
             }
@@ -535,7 +529,6 @@
           
             var seconeds = Math.round(video[0].currentTime);
             var minutes  = Math.floor(seconeds / 60);
-
              if (minutes > 0) {
                seconeds -= minutes * 60;
             }
@@ -619,7 +612,17 @@
            }
 
        }
-
+       function computeTime(totalSeconeds, totalMinutes){
+     	  if (totalMinutes > 0) {
+               totalSeconeds -= totalMinutes * 60;
+            }
+            if (totalSeconeds.toString().length === 1) {
+                totalSeconeds = "0" + totalSeconeds;
+             }
+             if (totalMinutes.toString().length === 1) {
+                 totalMinutes = "0" + totalMinutes;
+             }   
+       }
        function resizeVid() {
           if (container.width() < 600) {
              container.addClass('small');

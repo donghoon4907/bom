@@ -24,6 +24,7 @@ public class CategoryController {
 		this.cDao = (CategoryDao) cDao;
 		this.cVali = cVali;
 	}
+
 	@RequestMapping(value = "index.main")
 	public ModelAndView index(HttpServletRequest req) {
 		ModelAndView mv = new ModelAndView();
@@ -36,7 +37,9 @@ public class CategoryController {
 		mv.setViewName("index");
 		return mv;
 	}
-	//장르별 검색 지원
+
+
+	// 장르별 검색 지원
 	@RequestMapping(value = "genre.category")
 	public ModelAndView genre(HttpServletRequest req) {
 		ModelAndView mv = new ModelAndView();
@@ -47,12 +50,12 @@ public class CategoryController {
 			e.printStackTrace();
 		}
 		String genre = req.getParameter("genre");
-		if(genre == null) {
+		if (genre == null) {
 			List<CategoryVo> result = cDao.list("");
 			String genreResult = "모든 영화 목록";
 			mv.addObject("searchKeyword", genreResult);
 			mv.addObject("searchResult", result);
-			
+
 		} else {
 			List<CategoryVo> result = cDao.genreSearch(genre);
 			String genreResult = result.isEmpty() ? "검색 결과가 없습니다." : (genre + " - 별 검색 결과");
@@ -62,7 +65,8 @@ public class CategoryController {
 		mv.setViewName("search");
 		return mv;
 	}
-	//검색된 결과를 반환
+
+	// 검색된 결과를 반환
 	@RequestMapping(value = "search.category")
 	public ModelAndView search(HttpServletRequest req) {
 		ModelAndView mv = new ModelAndView();
@@ -74,7 +78,7 @@ public class CategoryController {
 		}
 		String search = req.getParameter("search");
 		List<CategoryVo> list = cDao.list(search);
-		if(search == null) {
+		if (search == null) {
 			String searchResult = "모든 영화 목록";
 			mv.addObject("searchKeyword", searchResult);
 			mv.addObject("searchResult", list);
@@ -86,7 +90,8 @@ public class CategoryController {
 		mv.setViewName("search");
 		return mv;
 	}
-	//플레이어에서 연관 영화 및 추천 영화를 선택시
+
+	// 플레이어에서 연관 영화 및 추천 영화를 선택시
 	@RequestMapping(value = "getSerial.category")
 	public void getSerial(HttpServletRequest req, HttpServletResponse res) {
 		try {
@@ -102,10 +107,11 @@ public class CategoryController {
 			out.print(result);
 			out.flush();
 			out.close();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 	// 메인페이지에서 영화 선택시 예고편을 보여줄 때 사용
 	@RequestMapping(value = "get.category")
 	public void view(HttpServletRequest req, HttpServletResponse res) {

@@ -1,5 +1,7 @@
 package member;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,6 +33,90 @@ public class MemberDao implements Member {
 	public MemberDao() {
 		sqlSession = MybatisFactory.getFactory().openSession();
 	}
+	
+	
+	public List<PurchaseVo> purchaseList(String serial, String year){
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("serial", serial);
+		map.put("year", year);
+		
+		
+		List<PurchaseVo> data = sqlSession.selectList("member.purchaseList",map);		
+		return data;
+	}
+	
+	
+	public String MemberShipEndDate(String serial) {
+		
+		String str = "0";
+		MemberShipVo msv= sqlSession.selectOne("member.getMemberShip",serial);
+		if(msv != null) {
+			String ss = msv.getEnddate().substring(0,10);
+			ss = ss.replace("-", "");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); 
+			try {
+				Date date = new Date();
+				String sd = sdf.format(date);
+				Date nowDate = sdf.parse(sd);
+				Date endDate = sdf.parse(ss);
+				
+				long diff = endDate.getTime()- nowDate.getTime();
+				long diffDays = diff / (24*60*60*1000);
+				
+				str = diffDays+"";
+
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		
+		return str;
+		
+	}
+	
+	
+	
+	
+	public boolean addMemberShip(int serial) {
+		boolean b = false;
+		String tableName = "purchase_"+serial;
+		
+		boolean check = sqlSession.selectOne("member.MemberShipCheck",serial);
+		
+		if(check) {
+			int cnt = sqlSession.update("member.updateMemberShip",serial);
+			if(cnt > 0) {
+				cnt = sqlSession.insert("member.addPurchase",tableName);
+				if(cnt > 0) {
+					sqlSession.commit();
+					b=true;
+				}else {
+					sqlSession.rollback();
+				}
+			}else {
+				sqlSession.rollback();
+			}			
+		}else {
+			int cnt = sqlSession.insert("member.addMemberShip",serial);
+			if(cnt > 0) {
+				cnt = sqlSession.insert("member.addPurchase",tableName);
+				if(cnt > 0) {
+					sqlSession.commit();
+					b=true;
+				}else {
+					sqlSession.rollback();
+				}
+			}else {
+				sqlSession.rollback();
+			}
+		}
+		return b;
+	}
+	
+	
 	
 	public List<ViewingActivityVo> viewingActivityList(String serial){
 		String viewingTable = "viewingactivity_"+serial;
@@ -213,6 +299,9 @@ public class MemberDao implements Member {
 		vo.setC_serial(Integer.parseInt(serial));
 		vo.setC_tableName(mSerial);
 		vo.setV_playtime(Integer.parseInt(playtime));
+		System.out.println(vo.getC_serial());
+		System.out.println(vo.getC_tableName());
+		System.out.println(vo.getV_playtime());
 		int cnt = sqlSession.update("member.updateView", vo);
 		if (cnt != 0) {
 			sqlSession.commit();
