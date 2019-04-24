@@ -331,6 +331,9 @@
         	   serial : movieSerial,
         	   mSerial : mSerial,
         	   playtime : playtime
+        	   
+           }, function(data){
+        	   console.log(data);
            });
           location.href="/final/index.main";
        });
@@ -420,6 +423,8 @@
             	   serial : movieSerial,
             	   mSerial : mSerial,
             	   playtime : playtime
+               },function(data){
+            	   console.log(data);
                });
            }
        }

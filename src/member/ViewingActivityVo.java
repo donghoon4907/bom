@@ -31,8 +31,8 @@ public class ViewingActivityVo {
 	public int getV_playtime() {
 		return v_playtime;
 	}
-	public void setV_playtime(int c_playtime) {
-		this.v_playtime = c_playtime;
+	public void setV_playtime(int v_playtime) {
+		this.v_playtime = v_playtime;
 	}
 	public int getRn() {
 		return rn;

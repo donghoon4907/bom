@@ -82,7 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0 //EN"
 	</delete>
 	<update id="updateView" parameterType="member.ViewingActivityVo">
 		update ${c_tableName} set
-		v_playtime = ${c_playtime} where c_serial = ${c_serial}
+		v_playtime = ${v_playtime} where c_serial = ${c_serial}
 	</update>
 	<select id="getPlaytime"
 		parameterType="member.ViewingActivityVo" resultType="Integer">

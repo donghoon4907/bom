@@ -159,7 +159,8 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "updateView.mem")
-	public void updateView(HttpServletRequest req) {
+	public void updateView(HttpServletRequest req, HttpServletResponse resp)  throws Exception{
+		PrintWriter out = resp.getWriter();
 		String serial = req.getParameter("serial");
 		String mSerial = req.getParameter("mSerial");
 		String playtime = req.getParameter("playtime");
@@ -172,8 +173,10 @@ public class MemberController {
 			boolean test = mDao.updateView(serial, mSerial, playtime);
 			if (test) {
 				System.out.println("데이터 저장 성공");
+				out.print("ok");
 			} else {
 				System.out.println("데이터 저장 중 에러");
+				out.print("no");
 			}
 		}
 	}
